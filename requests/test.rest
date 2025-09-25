@@ -4,8 +4,19 @@ Content-Type: application/json
 {
     "title": "ya2",
     "author": "Thirds",
-    "url": "yourMoms",
-    "likes": 25368
+    "url": "yourMoms"
 }
 ###
 GET http://localhost:3003/api/blogs
+###
+DELETE http://localhost:3003/api/blogs/68d5691a76f9b58f720672ec
+###
+PUT http://localhost:3003/api/blogs/68d57a8b1a77e4a330c0c0a7
+Content-Type: application/json
+
+{
+    "title": "updated",
+    "author": "New Author",
+    "url": "http://your.mom",
+    "likes": 345
+}
