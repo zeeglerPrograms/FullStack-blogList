@@ -1,10 +1,11 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 const User = require('../models/user')
+const jwt = require('jsonwebtoken')
 
 blogsRouter.get('/', async (request, response) => {
   const blogs = await Blog
-    .find({}).populate('user', { name: 1 })
+    .find({}).populate('user', { name: 1, username: 1 })
   response.json(blogs)
 })
 
@@ -19,11 +20,14 @@ blogsRouter.get('/:id', async (request, response) => {
 
 blogsRouter.post('/', async (request, response) => {
   const body = request.body
-
-  const user = await User.findById(body.userId)
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  if(!decodedToken.id) {
+    return response.status(401).json({ error: 'token invalid' })
+  }
+  const user = await User.findById(decodedToken.id)
 
   if (!user) {
-    return response.status(400).json({ error: 'userId missing or not valid' })
+    return response.status(400).json({ error: 'userId missing or not valid: ' })
   }
   
   const blog = new Blog({
@@ -31,7 +35,7 @@ blogsRouter.post('/', async (request, response) => {
     author: body.author,
     url: body.url,
     likes: body.likes ? body.likes : 0,
-    user: user._id
+    user: user.id
   }) 
 
   const savedBlog = await blog.save()
@@ -43,7 +47,15 @@ blogsRouter.post('/', async (request, response) => {
 })
 
 blogsRouter.delete('/:id', async (request, response) => {
-  await Blog.findByIdAndDelete(request.params.id)
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  const blogToDelete = await Blog.findById(request.params.id)
+  if(!decodedToken.id) {
+    return response.status(401).json({ error: 'token invalid' })
+  }
+  if (decodedToken.id !== blogToDelete.user.toString()) {
+    return response.status(401).json({ error: `'only author can delete posts'` })
+  }
+  await Blog.findByIdAndDelete(blogToDelete)
   response.status(204).end()
 })
 
@@ -58,7 +70,8 @@ blogsRouter.put('/:id', async (request, response) => {
   blog.title = title
   blog.author = author
   blog.url = url
-  blog.likes = likes ? likes : 0
+  blog.likes = likes ? likes : 0,
+  blog.user = blog.user
 
   await blog.save()
   response.json(blog)

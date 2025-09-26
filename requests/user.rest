@@ -2,21 +2,22 @@ POST http://localhost:3003/api/users
 Content-Type: application/json
 
 {
-  "username": "root",
-  "name": "Superuser",
-  "password": "NewPass"
+  "username": "New Guy2",
+  "name": "Newr Guy2",
+  "password": "hil"
 }
 ###
 GET http://localhost:3003/api/users
 ###
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjY4ZDZjNDY3MWFhMDVjMWIzYzBlNWNkMiIsImlhdCI6MTc1ODkwOTM0MiwiZXhwIjoxNzU4OTEyOTQyfQ.ab4o6-GqXl-NhYY4Mn2gcae8dov4ybtEoTMqw0bgl3c
 
 {
-  "title": "newTitle",
+  "title": "newestTitle",
   "author": "Daniel",
   "url": "http://www.yeeeahhhh.com",
-  "userId": "68d6c3cb18e722e3ef1d898a"
+  "userId": "68d6cac8b567d34860c2e7b2"
 }
 ###
 Get http://localhost:3003/api/blogs
@@ -28,3 +29,8 @@ Content-Type: application/json
   "username": "root",
   "password": "NewPass"
 }
+###
+DELETE http://localhost:3003/api/blogs/68d6d9b4dc361163e4aebe3f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjY4ZDZjNDY3MWFhMDVjMWIzYzBlNWNkMiIsImlhdCI6MTc1ODkxMTAzNiwiZXhwIjoxNzU4OTE0NjM2fQ.iRqBJVyH6_4_SM8Ja50zCYItiNdEIeSxHXz817zMbIg
+###
+GET  http://localhost:3003/api/blogs/68d6d9b4dc361163e4aebe3f

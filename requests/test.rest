@@ -4,7 +4,8 @@ Content-Type: application/json
 {
     "title": "ya2",
     "author": "Thirds",
-    "url": "yourMoms"
+    "url": "yourMoms",
+    "userId": "68d6c3cb18e722e3ef1d898a"
 }
 ###
 GET http://localhost:3003/api/blogs

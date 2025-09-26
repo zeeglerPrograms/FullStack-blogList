@@ -44,7 +44,7 @@ test('blog has property: id', async () => {
 
 test('a new blog is added', async () => {
   const blogsAtStart = helper.initialBlogs
-  const newBlog = {title: 'hilihihg', author: 'Your mom', url: 'http:/your/mom', likes: 34}
+  const newBlog = {title: 'hilihihg', author: 'Your mom', url: 'http:/your/mom', userId: '68d6c3cb18e722e3ef1d898a', likes: 34}
   await api
     .post('/api/blogs/')
     .send(newBlog)
@@ -57,7 +57,7 @@ test('a new blog is added', async () => {
 })
 
 test('a blog with no likes will have value of 0', async () => {
-  const newBlog = {title: 'hilihihg', author: 'Your mom', url: 'http:/your/mom'}
+  const newBlog = {title: 'checking', author: 'Your mom', url: 'http:/your/mom', userId: "68d6c4671aa05c1b3c0e5cd2"}
   await api
     .post('/api/blogs')
     .send(newBlog)
